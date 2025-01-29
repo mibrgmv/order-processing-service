@@ -1,2 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\OrderProcessingService.Infrastructure.Events\OrderProcessingService.Infrastructure.Events.csproj" />
+    <ProjectReference Include="..\OrderProcessingService.Application.Models\OrderProcessingService.Application.Models.csproj" />
+  </ItemGroup>
 </Project>
