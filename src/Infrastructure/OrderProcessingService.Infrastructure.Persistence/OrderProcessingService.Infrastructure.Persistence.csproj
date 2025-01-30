@@ -1,6 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <ItemGroup>
-    <Folder Include="Queries\" />
-    <Folder Include="Repositories\" />
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="FluentMigrator" />
+    <PackageReference Include="FluentMigrator.Runner" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\OrderProcessingService.Application.Abstractions\OrderProcessingService.Application.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

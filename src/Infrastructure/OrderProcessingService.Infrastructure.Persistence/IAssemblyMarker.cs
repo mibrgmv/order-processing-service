@@ -1,0 +1,3 @@
+namespace OrderProcessingService.Infrastructure.Persistence;
+
+internal interface IAssemblyMarker;

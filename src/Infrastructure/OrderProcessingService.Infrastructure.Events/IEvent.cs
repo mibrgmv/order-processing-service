@@ -1,3 +1,3 @@
 namespace OrderProcessingService.Infrastructure.Events;
 
-public interface IEvent { }
+public interface IEvent;
