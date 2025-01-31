@@ -5,6 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OrderProcessingService.Application.Abstractions\OrderProcessingService.Application.Abstractions.csproj" />
     <ProjectReference Include="..\OrderProcessingService.Application.Contracts\OrderProcessingService.Application.Contracts.csproj" />
   </ItemGroup>
 

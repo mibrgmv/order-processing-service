@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 
 namespace OrderProcessingService.Infrastructure.Persistence.Repositories;
 
-public class OrderRepository : IOrderRepository
+internal sealed class OrderRepository : IOrderRepository
 {
     private readonly NpgsqlDataSource _dataSource;
 

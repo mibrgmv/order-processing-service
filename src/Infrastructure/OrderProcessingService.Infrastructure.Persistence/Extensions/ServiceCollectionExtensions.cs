@@ -2,6 +2,7 @@ using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Npgsql;
+using OrderProcessingService.Application.Abstractions.Persistence;
 using OrderProcessingService.Application.Abstractions.Persistence.Repositories;
 using OrderProcessingService.Application.Models;
 using OrderProcessingService.Infrastructure.Persistence.Repositories;
@@ -37,6 +38,7 @@ public static class ServiceCollectionExtensions
                 .ScanIn(typeof(IAssemblyMarker).Assembly).For.Migrations())
             .AddLogging(lb => lb.AddFluentMigratorConsole());
 
+        collection.AddScoped<IPersistenceContext, PersistenceContext>();
         collection.AddScoped<IOrderRepository, OrderRepository>();
 
         return collection;
