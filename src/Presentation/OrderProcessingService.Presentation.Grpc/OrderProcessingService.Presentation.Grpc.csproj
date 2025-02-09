@@ -9,5 +9,9 @@
     <ItemGroup>
         <Protobuf Include="Protos\**\*.proto" GrpcServices="Server"/>
     </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\..\Application\OrderProcessingService.Application.Contracts\OrderProcessingService.Application.Contracts.csproj" />
+    </ItemGroup>
 
 </Project>

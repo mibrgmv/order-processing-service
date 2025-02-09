@@ -3,7 +3,7 @@ using OrderProcessingService.Application.Abstractions.Persistence.Repositories;
 
 namespace OrderProcessingService.Infrastructure.Persistence;
 
-internal class PersistenceContext : IPersistenceContext
+internal sealed class PersistenceContext : IPersistenceContext
 {
     public PersistenceContext(IOrderRepository orderRepository)
     {

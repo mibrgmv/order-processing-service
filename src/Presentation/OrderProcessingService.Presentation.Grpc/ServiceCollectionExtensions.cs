@@ -8,7 +8,10 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPresentationGrpc(this IServiceCollection collection)
     {
-        throw new NotImplementedException();
+        collection.AddGrpc();
+        collection.AddGrpcReflection();
+
+        return collection;
     }
 
     public static IApplicationBuilder UsePresentationGrpc(this IApplicationBuilder builder)

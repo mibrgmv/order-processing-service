@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace OrderProcessingService.Infrastructure.Events;
 
-internal class EventPublisher : IEventPublisher
+internal sealed class EventPublisher : IEventPublisher
 {
     private readonly IServiceProvider _provider;
 

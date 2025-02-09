@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace OrderProcessingService.Infrastructure.Events.Configuration;
 
-internal class EventsConfigurationBuilder : IEventsConfigurationBuilder
+internal sealed class EventsConfigurationBuilder : IEventsConfigurationBuilder
 {
     private readonly IServiceCollection _collection;
 
