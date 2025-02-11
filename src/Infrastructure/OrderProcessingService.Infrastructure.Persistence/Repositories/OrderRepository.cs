@@ -22,15 +22,16 @@ internal sealed class OrderRepository : IOrderRepository
         OrderQuery query,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
+        // todo remove cursor is null
         const string sql = """
-        select  order_id,
-                order_state, 
-                order_created_at, 
-                order_updated_at
+        select order_id,
+               order_state, 
+               order_created_at, 
+               order_updated_at
         from orders
         where 
             (cardinality(:ids) = 0 or order_id = any (:ids))
-            and order_id > :cursor
+            and :cursor is null or order_id > :cursor
         limit :page_size;
         """;
 
@@ -56,12 +57,13 @@ internal sealed class OrderRepository : IOrderRepository
     public async Task AddOrUpdateAsync(IReadOnlyCollection<Order> orders, CancellationToken cancellationToken)
     {
         const string sql = """
-        insert into orders (order_id, order_state, order_created_at, order_updated_at)
+        insert into orders(order_id, order_state, order_created_at, order_updated_at)
         select order_id,
                order_state,
                order_created_at,
                order_updated_at
         from unnest(:ids, :states, :created_at, :updated_at)
+        as source(order_id, order_state, order_created_at, order_updated_at)
         on conflict on constraint orders_pkey
         do update 
         set order_state = excluded.order_state,
@@ -72,10 +74,10 @@ internal sealed class OrderRepository : IOrderRepository
         await using NpgsqlConnection connection = await _dataSource.OpenConnectionAsync(cancellationToken);
 
         await using NpgsqlCommand command = new NpgsqlCommand(sql, connection)
-            .AddParameter("ids", orders.Select(x => x.Id))
-            .AddParameter("states", orders.Select(x => x.State))
-            .AddParameter("created_at", orders.Select(x => x.CreatedAt))
-            .AddParameter("updated_at", orders.Select(x => x.UpdatedAt));
+            .AddParameter("ids", orders.Select(x => x.Id).ToArray())
+            .AddParameter("states", orders.Select(x => x.State).ToArray())
+            .AddParameter("created_at", orders.Select(x => x.CreatedAt).ToArray())
+            .AddParameter("updated_at", orders.Select(x => x.UpdatedAt).ToArray());
 
         await command.ExecuteNonQueryAsync(cancellationToken);
     }

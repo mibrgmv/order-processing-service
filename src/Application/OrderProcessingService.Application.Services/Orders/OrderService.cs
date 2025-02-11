@@ -9,7 +9,7 @@ using System.Transactions;
 
 namespace OrderProcessingService.Application.Services.Orders;
 
-internal class OrderService : IOrderService
+internal sealed class OrderService : IOrderService
 {
     private readonly IPersistenceContext _context;
     private readonly IEventPublisher _eventPublisher;
@@ -23,7 +23,7 @@ internal class OrderService : IOrderService
     public async Task CreateAsync(CreateOrder.Request request, CancellationToken cancellationToken)
     {
         var order = new Order(request.OrderId, OrderState.Created, request.CreatedAt, request.CreatedAt);
-        await _context.OrderRepository.AddOrUpdateAsync([order], cancellationToken);
+        await _context.Orders.AddOrUpdateAsync([order], cancellationToken);
     }
 
     public async Task<StartOrderProcessing.Result> StartProcessingAsync(
@@ -32,7 +32,7 @@ internal class OrderService : IOrderService
     {
         var orderQuery = new OrderQuery([request.OrderId], 1, null);
 
-        Order? order = await _context.OrderRepository
+        Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -45,7 +45,7 @@ internal class OrderService : IOrderService
             UpdatedAt = request.StartedAt,
         };
 
-        await _context.OrderRepository.AddOrUpdateAsync([order], cancellationToken);
+        await _context.Orders.AddOrUpdateAsync([order], cancellationToken);
 
         return new StartOrderProcessing.Result.Success();
     }
@@ -54,7 +54,7 @@ internal class OrderService : IOrderService
     {
         var orderQuery = new OrderQuery([request.OrderId], 1, null);
 
-        Order? order = await _context.OrderRepository
+        Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -78,7 +78,7 @@ internal class OrderService : IOrderService
 
         using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        await _context.OrderRepository.AddOrUpdateAsync([order], cancellationToken);
+        await _context.Orders.AddOrUpdateAsync([order], cancellationToken);
         await _eventPublisher.PublishAsync(evt, cancellationToken);
 
         transaction.Complete();
@@ -90,7 +90,7 @@ internal class OrderService : IOrderService
     {
         var orderQuery = new OrderQuery([request.OrderId], 1, null);
 
-        Order? order = await _context.OrderRepository
+        Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -110,7 +110,7 @@ internal class OrderService : IOrderService
 
         using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        await _context.OrderRepository.AddOrUpdateAsync([order], cancellationToken);
+        await _context.Orders.AddOrUpdateAsync([order], cancellationToken);
         await _eventPublisher.PublishAsync(evt, cancellationToken);
 
         transaction.Complete();
@@ -122,7 +122,7 @@ internal class OrderService : IOrderService
     {
         var orderQuery = new OrderQuery([request.OrderId], 1, null);
 
-        Order? order = await _context.OrderRepository
+        Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -146,7 +146,7 @@ internal class OrderService : IOrderService
 
         using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        await _context.OrderRepository.AddOrUpdateAsync([order], cancellationToken);
+        await _context.Orders.AddOrUpdateAsync([order], cancellationToken);
         await _eventPublisher.PublishAsync(evt, cancellationToken);
 
         transaction.Complete();
@@ -158,7 +158,7 @@ internal class OrderService : IOrderService
     {
         var orderQuery = new OrderQuery([request.OrderId], 1, null);
 
-        Order? order = await _context.OrderRepository
+        Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -181,7 +181,7 @@ internal class OrderService : IOrderService
 
         using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        await _context.OrderRepository.AddOrUpdateAsync([order], cancellationToken);
+        await _context.Orders.AddOrUpdateAsync([order], cancellationToken);
         await _eventPublisher.PublishAsync(evt, cancellationToken);
 
         transaction.Complete();
@@ -193,7 +193,7 @@ internal class OrderService : IOrderService
     {
         var orderQuery = new OrderQuery([request.OrderId], 1, null);
 
-        Order? order = await _context.OrderRepository
+        Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -217,7 +217,7 @@ internal class OrderService : IOrderService
 
         using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        await _context.OrderRepository.AddOrUpdateAsync([order], cancellationToken);
+        await _context.Orders.AddOrUpdateAsync([order], cancellationToken);
         await _eventPublisher.PublishAsync(evt, cancellationToken);
 
         transaction.Complete();

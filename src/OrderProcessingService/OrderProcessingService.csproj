@@ -4,4 +4,11 @@
         <OutputType>Exe</OutputType>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Application\OrderProcessingService.Application.Services\OrderProcessingService.Application.Services.csproj" />
+      <ProjectReference Include="..\Infrastructure\OrderProcessingService.Infrastructure.Persistence\OrderProcessingService.Infrastructure.Persistence.csproj" />
+      <ProjectReference Include="..\Presentation\OrderProcessingService.Presentation.Grpc\OrderProcessingService.Presentation.Grpc.csproj" />
+      <ProjectReference Include="..\Presentation\OrderProcessingService.Presentation.Kafka\OrderProcessingService.Presentation.Kafka.csproj" />
+    </ItemGroup>
+
 </Project>

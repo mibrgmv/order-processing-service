@@ -4,5 +4,5 @@ namespace OrderProcessingService.Application.Abstractions.Persistence;
 
 public interface IPersistenceContext
 {
-    IOrderRepository OrderRepository { get; }
+    IOrderRepository Orders { get; }
 }

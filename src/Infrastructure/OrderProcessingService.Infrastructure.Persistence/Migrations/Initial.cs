@@ -22,7 +22,7 @@ public class Initial : Migration
         );
         
         create table orders
-        (x
+        (
             order_id          bigint primary key        not null,
 
             order_state       order_state               not null,

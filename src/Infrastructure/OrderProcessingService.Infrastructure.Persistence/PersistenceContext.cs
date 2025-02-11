@@ -7,8 +7,8 @@ internal sealed class PersistenceContext : IPersistenceContext
 {
     public PersistenceContext(IOrderRepository orderRepository)
     {
-        OrderRepository = orderRepository;
+        Orders = orderRepository;
     }
 
-    public IOrderRepository OrderRepository { get; }
+    public IOrderRepository Orders { get; }
 }
