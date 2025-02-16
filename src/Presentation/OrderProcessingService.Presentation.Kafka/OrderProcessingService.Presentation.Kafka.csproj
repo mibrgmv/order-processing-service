@@ -1,13 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\Application\OrderProcessingService.Application.Contracts\OrderProcessingService.Application.Contracts.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\OrderProcessingService.Infrastructure.Events\OrderProcessingService.Infrastructure.Events.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\OrderProcessingService.Infrastructure.Kafka\OrderProcessingService.Infrastructure.Kafka.csproj" />
+    </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Infrastructure\OrderProcessingService.Infrastructure.Events\OrderProcessingService.Infrastructure.Events.csproj" />
+        <PackageReference Include="Npgsql" />
+        <PackageReference Include="Grpc.Tools" />
+    </ItemGroup>    
+
+    <ItemGroup>
+        <Protobuf Include="protos\*.proto" GrpcServices="None" />
     </ItemGroup>
+
 
 </Project>
