@@ -3,12 +3,15 @@ using OrderProcessingService.Infrastructure.Events;
 using OrderProcessingService.Infrastructure.Persistence.Extensions;
 using OrderProcessingService.Presentation.Grpc;
 using OrderProcessingService.Presentation.Kafka;
+using OrderProcessingService.Presentation.Kafka.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPlatformEvents(e => e.AddPresentationKafkaEventHandlers());
 builder.Services.AddApplication();
-builder.Services.AddPersistence();
+builder.Services.AddPersistencePostgres();
+builder.Services.AddPersistenceMigrations();
+builder.Services.AddPresentationKafka(builder.Configuration);
 builder.Services.AddPresentationGrpc();
 
 WebApplication app = builder.Build();

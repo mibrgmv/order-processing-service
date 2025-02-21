@@ -11,9 +11,11 @@ namespace OrderProcessingService.Infrastructure.Persistence.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPersistence(this IServiceCollection collection)
+    public static IServiceCollection AddPersistencePostgres(this IServiceCollection collection)
     {
-        collection.AddOptions<PersistenceOptions>().BindConfiguration(nameof(PersistenceOptions));
+        const string configurationKey = "Postgres";
+
+        collection.AddOptions<PersistenceOptions>().BindConfiguration(configurationKey);
 
         collection.AddScoped<NpgsqlDataSource>(sp =>
         {
@@ -26,6 +28,14 @@ public static class ServiceCollectionExtensions
             return dataSourceBuilder.Build();
         });
 
+        collection.AddScoped<IPersistenceContext, PersistenceContext>();
+        collection.AddScoped<IOrderRepository, OrderRepository>();
+
+        return collection;
+    }
+
+    public static IServiceCollection AddPersistenceMigrations(this IServiceCollection collection)
+    {
         collection
             .AddFluentMigratorCore()
             .ConfigureRunner(rb => rb
@@ -38,8 +48,7 @@ public static class ServiceCollectionExtensions
                 .ScanIn(typeof(IAssemblyMarker).Assembly).For.Migrations())
             .AddLogging(lb => lb.AddFluentMigratorConsole());
 
-        collection.AddScoped<IPersistenceContext, PersistenceContext>();
-        collection.AddScoped<IOrderRepository, OrderRepository>();
+        collection.AddHostedService<MigrationRunnerBackgroundService>();
 
         return collection;
     }
