@@ -19,7 +19,7 @@ services:
     networks:
       - order-service-network
     ports:
-      - '8000:8000'
+      - "8000:8000"
     restart: unless-stopped
   
   order-creation-service:
@@ -32,10 +32,10 @@ services:
       - postgres
       - kafka
     ports:
-      - '8080:8080'
+      - "8080:8080"
     restart: unless-stopped
     environment:
-      Postgres__Host: localhost
+      Postgres__Host: postgres
       Postgres__Port: 5432
       Postgres__Database: postgres
       Postgres__Username: postgres
@@ -53,10 +53,10 @@ services:
       - postgres
       - kafka
     ports:
-      - '8081:8081'
+      - "8081:8081"
     restart: unless-stopped
     environment:
-      Postgres__Host: localhost
+      Postgres__Host: postgres
       Postgres__Port: 5432
       Postgres__Database: postgres
       Postgres__Username: postgres
@@ -94,7 +94,7 @@ services:
     volumes:
       - order-service-kafka-data:/kafka-data
     ports:
-      - '8001:9092'
+      - "8001:9092"
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -106,7 +106,7 @@ services:
     networks:
       - order-service-network
     ports:
-      - '8003:8003'
+      - "8003:8003"
     volumes:
       - ./src/Presentation/OrderProcessingService.Presentation.Kafka/Protos:/schemas # change path to your local proto directory
     environment:
