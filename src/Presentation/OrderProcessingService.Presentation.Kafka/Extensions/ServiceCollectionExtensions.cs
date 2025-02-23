@@ -14,8 +14,8 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         const string configurationKey = "Kafka:Configuration";
-        const string producerKey = "Kafka:Producers:OrderCreation";
-        const string consumerKey = "Kafka:Consumers:OrderProcessing";
+        const string producerKey = "Kafka:Producers:OrderProcessing";
+        const string consumerKey = "Kafka:Consumers:OrderCreation";
 
         serviceCollection.AddKafka(builder => builder
             .WithOptions(configuration.GetSection(configurationKey))
