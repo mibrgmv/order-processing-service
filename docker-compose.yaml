@@ -1,7 +1,6 @@
 services:
-  postgres:
+  order-creation-postgres:
     image: postgres:latest
-    container_name: order-service-postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -12,30 +11,47 @@ services:
     networks:
       - order-service-network
   
-  order-service-gateway:
+  order-processing-postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "6432:5432"
+    restart: unless-stopped
+    networks:
+      - order-service-network
+  
+  gateway:
     image: ghcr.io/mibrgmv/order-service-gateway:latest
     platform: linux/arm64
-    container_name: order-service-gateway
     networks:
       - order-service-network
     ports:
-      - "8000:8000"
+      - "8000:5187"
     restart: unless-stopped
+    environment:
+      OrderCreationService__Prefix: http
+      OrderCreationService__Host: order-creation-service
+      OrderCreationService__Port: 8080
+      OrderProcessingService__Prefix: http
+      OrderProcessingService__Host: order-processing-service
+      OrderProcessingService__Port: 8081
   
   order-creation-service:
     image: ghcr.io/mibrgmv/order-creation-service:latest
     platform: linux/arm64
-    container_name: order-creation-service
     networks:
       - order-service-network
     depends_on:
-      - postgres
+      - order-creation-postgres
       - kafka
     ports:
       - "8080:8080"
     restart: unless-stopped
     environment:
-      Postgres__Host: postgres
+      Postgres__Host: order-creation-postgres
       Postgres__Port: 5432
       Postgres__Database: postgres
       Postgres__Username: postgres
@@ -46,17 +62,16 @@ services:
   order-processing-service:
     image: ghcr.io/mibrgmv/order-processing-service:latest
     platform: linux/arm64
-    container_name: order-processing-service
     networks:
       - order-service-network
     depends_on:
-      - postgres
+      - order-processing-postgres
       - kafka
     ports:
       - "8081:8081"
     restart: unless-stopped
     environment:
-      Postgres__Host: postgres
+      Postgres__Host: order-processing-postgres
       Postgres__Port: 5432
       Postgres__Database: postgres
       Postgres__Username: postgres
@@ -108,7 +123,7 @@ services:
     ports:
       - "8003:8003"
     volumes:
-      - ./src/Presentation/OrderProcessingService.Presentation.Kafka/Protos:/schemas # change path to your local proto directory
+      - ./src/Presentation/OrderProcessingService.Presentation.Kafka/protos:/schemas # change path to your local proto directory
     environment:
       kafka.clusters.0.name: kafka
       kafka.clusters.0.bootstrapServers: kafka:9094
