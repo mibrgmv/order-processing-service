@@ -86,7 +86,7 @@ services:
       - ALLOW_ANONYMOUS_LOGIN=yes
     networks:
       - order-service-network
-
+  
   kafka:
     image: wurstmeister/kafka:latest
     restart: unless-stopped
@@ -121,21 +121,21 @@ services:
     networks:
       - order-service-network
     ports:
-      - "8003:8003"
+      - "8003:8080"
     volumes:
-      - ./src/Presentation/OrderProcessingService.Presentation.Kafka/protos:/schemas # change path to your local proto directory
+      - ./src/Presentation/OrderProcessingService.Presentation.Kafka/protos:/schemas
     environment:
       kafka.clusters.0.name: kafka
       kafka.clusters.0.bootstrapServers: kafka:9094
       kafka.clusters.0.defaultKeySerde: ProtobufFile
       kafka.clusters.0.defaultValueSerde: ProtobufFile
-
+      
       kafka.clusters.0.serde.0.name: ProtobufFile
       kafka.clusters.0.serde.0.properties.protobufFilesDir: /schemas/
-
+      
       kafka.clusters.0.serde.0.properties.protobufMessageNameForKeyByTopic.order_creation: orders.OrderCreationKey
       kafka.clusters.0.serde.0.properties.protobufMessageNameForKeyByTopic.order_processing: orders.OrderProcessingKey
-
+      
       kafka.clusters.0.serde.0.properties.protobufMessageNameByTopic.order_creation: orders.OrderCreationValue
       kafka.clusters.0.serde.0.properties.protobufMessageNameByTopic.order_processing: orders.OrderProcessingValue
 
