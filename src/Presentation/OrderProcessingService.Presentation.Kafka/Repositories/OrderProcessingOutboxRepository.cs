@@ -24,7 +24,7 @@ public class OrderProcessingOutboxRepository : IOutboxRepository<OrderProcessing
         insert into outbox(message_type, message_key, message_value, message_created_at, message_processed_at)
         values (:type, :key, :value, :created_at, :processed_at)
         on conflict (message_key, message_value)
-        do update 
+        do update
         set message_processed_at = excluded.message_processed_at
         """;
 
