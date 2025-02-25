@@ -22,16 +22,14 @@ internal sealed class OrderRepository : IOrderRepository
         OrderQuery query,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        // todo remove cursor is null
         const string sql = """
         select order_id,
                order_state, 
                order_created_at, 
                order_updated_at
         from orders
-        where 
-            (cardinality(:ids) = 0 or order_id = any (:ids))
-            and :cursor is null or order_id > :cursor
+        where (order_id > :cursor)
+          and (cardinality(:ids) = 0 or order_id = any (:ids))
         limit :page_size;
         """;
 
