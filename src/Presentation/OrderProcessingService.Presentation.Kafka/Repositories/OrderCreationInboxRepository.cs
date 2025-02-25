@@ -24,7 +24,7 @@ public class OrderCreationInboxRepository : IInboxRepository<OrderCreationKey, O
         insert into inbox(message_key, message_value, message_created_at, message_processed_at)
         values (:key, :value, :created_at, :processed_at)
         on conflict (message_key, message_value)
-        do update
+        do update 
         set message_processed_at = excluded.message_processed_at
         """;
 
