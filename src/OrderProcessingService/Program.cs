@@ -7,7 +7,7 @@ using OrderProcessingService.Presentation.Kafka.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddPlatformEvents(e => e.AddPresentationKafkaEventHandlers());
+builder.Services.AddInfrastructureEvents(e => e.AddPresentationKafkaEventHandlers());
 builder.Services.AddApplication();
 builder.Services.AddPersistencePostgres();
 builder.Services.AddPersistenceMigrations();

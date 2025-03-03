@@ -11,16 +11,6 @@ internal sealed class EventPublisher : IEventPublisher
         _provider = provider;
     }
 
-    public ValueTask PublishAsync<T>(T evt) where T : IEvent
-    {
-        return PublishAsync(evt, default);
-    }
-
-    public ValueTask PublishAsync<T>(IEnumerable<T> events) where T : IEvent
-    {
-        return PublishAsync(events, default);
-    }
-
     public async ValueTask PublishAsync<T>(T evt, CancellationToken cancellationToken) where T : IEvent
     {
         IEnumerable<IEventHandler<T>> handlers = _provider.GetRequiredService<IEnumerable<IEventHandler<T>>>();
@@ -28,20 +18,6 @@ internal sealed class EventPublisher : IEventPublisher
         foreach (IEventHandler<T> handler in handlers)
         {
             await handler.HandleAsync(evt, cancellationToken);
-        }
-    }
-
-    public async ValueTask PublishAsync<T>(IEnumerable<T> events, CancellationToken cancellationToken) where T : IEvent
-    {
-        IEnumerable<IEventHandler<T>> handlers = _provider.GetRequiredService<IEnumerable<IEventHandler<T>>>();
-
-        foreach (T evt in events)
-        {
-            // ReSharper disable once PossibleMultipleEnumeration
-            foreach (IEventHandler<T> handler in handlers)
-            {
-                await handler.HandleAsync(evt, cancellationToken);
-            }
         }
     }
 }

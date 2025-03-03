@@ -28,7 +28,7 @@ internal sealed class OrderRepository : IOrderRepository
                order_created_at, 
                order_updated_at
         from orders
-        where (order_id > :cursor)
+        where (:cursor is null or order_id > :cursor)
           and (cardinality(:ids) = 0 or order_id = any (:ids))
         limit :page_size;
         """;
