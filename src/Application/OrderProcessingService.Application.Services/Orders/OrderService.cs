@@ -30,7 +30,7 @@ internal sealed class OrderService : IOrderService
         StartOrderProcessing.Request request,
         CancellationToken cancellationToken)
     {
-        var orderQuery = new OrderQuery([request.OrderId], 1, null);
+        var orderQuery = new OrderQuery([request.OrderId], null, 1);
 
         Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
@@ -52,7 +52,7 @@ internal sealed class OrderService : IOrderService
 
     public async Task<ApproveOrder.Result> ApproveAsync(ApproveOrder.Request request, CancellationToken cancellationToken)
     {
-        var orderQuery = new OrderQuery([request.OrderId], 1, null);
+        var orderQuery = new OrderQuery([request.OrderId], null, 1);
 
         Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
@@ -88,7 +88,7 @@ internal sealed class OrderService : IOrderService
 
     public async Task<StartOrderPacking.Result> StartPackingAsync(StartOrderPacking.Request request, CancellationToken cancellationToken)
     {
-        var orderQuery = new OrderQuery([request.OrderId], 1, null);
+        var orderQuery = new OrderQuery([request.OrderId], null, 1);
 
         Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
@@ -120,7 +120,7 @@ internal sealed class OrderService : IOrderService
 
     public async Task<FinishOrderPacking.Result> FinishPackingAsync(FinishOrderPacking.Request request, CancellationToken cancellationToken)
     {
-        var orderQuery = new OrderQuery([request.OrderId], 1, null);
+        var orderQuery = new OrderQuery([request.OrderId], null, 1);
 
         Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
@@ -156,7 +156,7 @@ internal sealed class OrderService : IOrderService
 
     public async Task<StartOrderDelivery.Result> StartDeliveryAsync(StartOrderDelivery.Request request, CancellationToken cancellationToken)
     {
-        var orderQuery = new OrderQuery([request.OrderId], 1, null);
+        var orderQuery = new OrderQuery([request.OrderId], null, 1);
 
         Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)
@@ -191,7 +191,7 @@ internal sealed class OrderService : IOrderService
 
     public async Task<FinishOrderDelivery.Result> FinishDeliveryAsync(FinishOrderDelivery.Request request, CancellationToken cancellationToken)
     {
-        var orderQuery = new OrderQuery([request.OrderId], 1, null);
+        var orderQuery = new OrderQuery([request.OrderId], null, 1);
 
         Order? order = await _context.Orders
             .QueryAsync(orderQuery, cancellationToken)

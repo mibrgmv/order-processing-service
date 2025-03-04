@@ -53,6 +53,6 @@ internal sealed class KafkaProducerBuilder<TKey, TValue> : IKafkaProducerAdditio
             ActivatorUtilities.CreateInstance<KafkaProducer<TKey, TValue>>(sp, _topicName));
 
         _serviceCollection.TryAddScoped<IKafkaProducer<TKey, TValue>>(sp =>
-            ActivatorUtilities.CreateInstance<KafkaProducer<TKey, TValue>>(sp));
+            ActivatorUtilities.CreateInstance<KafkaProducer<TKey, TValue>>(sp, _topicName));
     }
 }
