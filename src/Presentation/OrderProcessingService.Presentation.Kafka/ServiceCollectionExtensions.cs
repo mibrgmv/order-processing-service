@@ -1,4 +1,4 @@
-using OrderProcessingService.Infrastructure.Events.Configuration;
+using Itmo.Dev.Platform.Events;
 
 namespace OrderProcessingService.Presentation.Kafka;
 

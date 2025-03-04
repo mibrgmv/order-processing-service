@@ -1,4 +1,4 @@
-using OrderProcessingService.Infrastructure.Events;
+using Itmo.Dev.Platform.Events;
 
 namespace OrderProcessingService.Application.Contracts.Orders.Events;
 

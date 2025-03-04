@@ -7,6 +7,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ./*.props ./
 COPY ["src/OrderProcessingService/OrderProcessingService.csproj", "src/OrderProcessingService/"]
 COPY ["src/Presentation/OrderProcessingService.Presentation.Grpc/OrderProcessingService.Presentation.Grpc.csproj", "src/Presentation/OrderProcessingService.Presentation.Grpc/"]
 COPY ["src/Application/OrderProcessingService.Application.Contracts/OrderProcessingService.Application.Contracts.csproj", "src/Application/OrderProcessingService.Application.Contracts/"]
@@ -17,9 +18,9 @@ COPY ["src/Application/OrderProcessingService.Application.Abstractions/OrderProc
 COPY ["src/Infrastructure/OrderProcessingService.Infrastructure.Persistence/OrderProcessingService.Infrastructure.Persistence.csproj", "src/Infrastructure/OrderProcessingService.Infrastructure.Persistence/"]
 COPY ["src/Presentation/OrderProcessingService.Presentation.Kafka/OrderProcessingService.Presentation.Kafka.csproj", "src/Presentation/OrderProcessingService.Presentation.Kafka/"]
 COPY ["src/Infrastructure/OrderProcessingService.Infrastructure.Kafka/OrderProcessingService.Infrastructure.Kafka.csproj", "src/Infrastructure/OrderProcessingService.Infrastructure.Kafka/"]
-COPY ["Directory.Build.props", "."]
-COPY ["Directory.Packages.props", "."]
+
 RUN dotnet restore "src/OrderProcessingService/OrderProcessingService.csproj"
+
 COPY . .
 WORKDIR "/src/src/OrderProcessingService"
 RUN dotnet build "OrderProcessingService.csproj" -c $BUILD_CONFIGURATION -o /app/build

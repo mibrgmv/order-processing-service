@@ -1,10 +1,10 @@
+using Itmo.Dev.Platform.Events;
 using OrderProcessingService.Application.Abstractions.Persistence;
 using OrderProcessingService.Application.Abstractions.Persistence.Queries;
 using OrderProcessingService.Application.Contracts.Orders;
 using OrderProcessingService.Application.Contracts.Orders.Events;
 using OrderProcessingService.Application.Contracts.Orders.Operations;
 using OrderProcessingService.Application.Models;
-using OrderProcessingService.Infrastructure.Events;
 using System.Transactions;
 
 namespace OrderProcessingService.Application.Services.Orders;

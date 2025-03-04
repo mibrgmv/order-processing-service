@@ -2,12 +2,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Application\OrderProcessingService.Application.Contracts\OrderProcessingService.Application.Contracts.csproj" />
-      <ProjectReference Include="..\..\Infrastructure\OrderProcessingService.Infrastructure.Events\OrderProcessingService.Infrastructure.Events.csproj" />
       <ProjectReference Include="..\..\Infrastructure\OrderProcessingService.Infrastructure.Kafka\OrderProcessingService.Infrastructure.Kafka.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" />
+        <PackageReference Include="Itmo.Dev.Platform.Events" />
         <PackageReference Include="Npgsql" />
     </ItemGroup>    
 

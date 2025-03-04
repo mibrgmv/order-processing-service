@@ -1,6 +1,6 @@
 using Google.Protobuf.WellKnownTypes;
+using Itmo.Dev.Platform.Events;
 using OrderProcessingService.Application.Contracts.Orders.Events;
-using OrderProcessingService.Infrastructure.Events;
 using OrderProcessingService.Infrastructure.Kafka.Producer;
 using OrderProcessingService.Infrastructure.Kafka.Producer.Models;
 using Orders.Kafka.Contracts;
