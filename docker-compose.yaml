@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     networks:
       - order-service-network
-  
+
   order-processing-postgres:
     image: postgres:latest
     environment:
@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     networks:
       - order-service-network
-  
+
   gateway:
     image: ghcr.io/mibrgmv/order-service-gateway:latest
     platform: linux/arm64
@@ -38,7 +38,7 @@ services:
       OrderProcessingService__Prefix: http
       OrderProcessingService__Host: order-processing-service
       OrderProcessingService__Port: 8081
-  
+
   order-creation-service:
     image: ghcr.io/mibrgmv/order-creation-service:latest
     platform: linux/arm64
@@ -58,7 +58,7 @@ services:
       Postgres__Password: postgres
       Postgres__SslMode: Prefer
       Kafka__Configuration__BootstrapServers: kafka:9094
-  
+
   order-processing-service:
     image: ghcr.io/mibrgmv/order-processing-service:latest
     platform: linux/arm64
@@ -78,7 +78,7 @@ services:
       Postgres__Password: postgres
       Postgres__SslMode: Prefer
       Kafka__Configuration__BootstrapServers: kafka:9094
-  
+
   zookeeper:
     image: wurstmeister/zookeeper:latest
     restart: unless-stopped
@@ -86,7 +86,7 @@ services:
       - ALLOW_ANONYMOUS_LOGIN=yes
     networks:
       - order-service-network
-  
+
   kafka:
     image: wurstmeister/kafka:latest
     restart: unless-stopped
@@ -129,13 +129,13 @@ services:
       kafka.clusters.0.bootstrapServers: kafka:9094
       kafka.clusters.0.defaultKeySerde: ProtobufFile
       kafka.clusters.0.defaultValueSerde: ProtobufFile
-      
+
       kafka.clusters.0.serde.0.name: ProtobufFile
       kafka.clusters.0.serde.0.properties.protobufFilesDir: /schemas/
-      
+
       kafka.clusters.0.serde.0.properties.protobufMessageNameForKeyByTopic.order_creation: orders.OrderCreationKey
       kafka.clusters.0.serde.0.properties.protobufMessageNameForKeyByTopic.order_processing: orders.OrderProcessingKey
-      
+
       kafka.clusters.0.serde.0.properties.protobufMessageNameByTopic.order_creation: orders.OrderCreationValue
       kafka.clusters.0.serde.0.properties.protobufMessageNameByTopic.order_processing: orders.OrderProcessingValue
 
